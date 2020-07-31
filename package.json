@@ -1,0 +1,13 @@
+{
+  "name": "simple-scrapbook-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/JoaoOliveira0117/simple-scrapbook-api",
+  "author": "joao.oliveira0117@hotmail.com <joao.oliveira0117@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "uuidv4": "^6.2.0"
+  }
+}

@@ -1,21 +1,24 @@
+const cors = require("cors");
 const express = require("express");
 const {uuid} = require("uuidv4");
 
 const app = express();
 
+app.use(cors());
 app.use(express.json())
+
 
 const scraps = [];
 
 app.get('/scraps',(request, response) => {
-    return response.json(scraps);
+      return response.json(scraps);
 })
 
 //create
 app.post('/scraps', (request, response) => {
-    const {scrapTitle, scrapBody} = request.body;
+    const {title, message} = request.body;
 
-    const scrap = {id: uuid(),scrapTitle, scrapBody};
+    const scrap = {id: uuid(),title, message};
 
     scraps.push(scrap);
 
@@ -25,7 +28,7 @@ app.post('/scraps', (request, response) => {
 //edit
 app.put(`/scraps/:id`, (request, response) => {
   const { id } = request.params;
-  const { scrapTitle, scrapBody } = request.body;
+  const { title, message } = request.body;
 
   const scrapsIndex = scraps.findIndex((scrap) => scrap.id === id);
 
@@ -34,8 +37,8 @@ app.put(`/scraps/:id`, (request, response) => {
   }
   const scrap = {
     id,
-    scrapTitle,
-    scrapBody,
+    title,
+    message,
   };
   scraps[scrapsIndex] = scrap;
   return response.json(scrap);
@@ -43,9 +46,7 @@ app.put(`/scraps/:id`, (request, response) => {
 
 //delete
 app.delete('/scraps/:id', (request, response) => {
-
     const { id } = request.params;
-    const { scrapTitle, scrapBody } = request.params;
     const scrapIndex = scraps.findIndex(scrap => scrap.id == id);
     
     if(scrapIndex < 0) {

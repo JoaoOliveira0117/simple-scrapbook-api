@@ -1,3 +1,4 @@
+require("dotenv").config();
 const cors = require("cors");
 const express = require("express");
 const {uuid} = require("uuidv4");
@@ -9,6 +10,20 @@ app.use(express.json())
 
 
 const scraps = [];
+
+function validateScrapContent(request, response, next) {
+  const { title, message } = request.body;
+
+  if (!title || !message) {
+    return response
+      .status(400)
+      .json({ error: "All the fields must be filled!" });
+  }
+
+  next();
+}
+
+app.use("/scraps/:id", validateScrapContent);
 
 app.get('/scraps',(request, response) => {
       return response.json(scraps);
@@ -59,7 +74,7 @@ app.delete('/scraps/:id', (request, response) => {
 })
 
 
-const port = 3333;
+const port = process.env.PORT || 3333;
 app.listen(port, () => {
   console.log(`👌 Server up and running on PORT ${port}`);
 });

@@ -11,19 +11,8 @@ app.use(express.json())
 
 const scraps = [];
 
-function validateScrapContent(request, response, next) {
-  const { title, message } = request.body;
 
-  if (!title || !message) {
-    return response
-      .status(400)
-      .json({ error: "All the fields must be filled!" });
-  }
-
-  next();
-}
-
-app.use("/scraps/:id", validateScrapContent);
+//app.use("/scraps/:id", validateScrapContent);
 
 app.get('/scraps',(request, response) => {
       return response.json(scraps);
@@ -34,7 +23,6 @@ app.post('/scraps', (request, response) => {
     const {title, message} = request.body;
 
     const scrap = {id: uuid(),title, message};
-
     scraps.push(scrap);
 
     return response.json(scrap);
